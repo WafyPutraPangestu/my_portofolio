@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+* { scroll-behavior: auto; }
+body { 
+    font-family: 'VT323', monospace; 
+    background-color: #000; 
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* GPU Acceleration */
+.gpu-accelerated {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform, opacity;
+}
+
+/* Grid Background */
+.grid-line { position: absolute; background: rgba(34, 197, 94, 0.05); }
+.horizontal { width: 100%; height: 1px; }
+.vertical { width: 1px; height: 100%; }
+
+/* Terminal Style */
+.terminal-border {
+    border: 2px solid #22c55e;
+    box-shadow: 0 0 5px rgba(34, 197, 94, 0.2); 
+    background: rgba(0, 20, 0, 0.95);
+    backdrop-filter: blur(5px); 
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.terminal-border:hover {
+     box-shadow: 0 0 20px rgba(34, 197, 94, 0.6);
+     border-color: #4ade80;
+}
+
+/* Contact Card Scan Effect */
+.contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(to right, transparent, rgba(34, 197, 94, 0.2), transparent);
+    transform: skewX(-25deg);
+    transition: left 0.5s;
+    pointer-events: none;
+}
+.contact-card:hover::before {
+    left: 125%;
+    transition: left 0.7s ease-in-out;
+}
+
+/* CRT Effects */
+.crt-scanline {
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(34, 197, 94, 0.02) 2px, rgba(34, 197, 94, 0.02) 4px);
+    pointer-events: none; z-index: 50; mix-blend-mode: overlay;
+}
+.crt-flicker { animation: flicker 0.15s infinite; }
+@keyframes flicker { 0% { opacity: 0.97; } 50% { opacity: 1; } 100% { opacity: 0.97; } }
+
+/* Layout IDs */
+#pc-group { transition: opacity 0.2s ease-out; transform-origin: center 35%; z-index: 10; }
+#about-section, #project-section, #contact-section { 
+    position: fixed; inset: 0; display: flex; flex-direction: column; 
+    justify-content: start; align-items: center; padding-top: 70px; 
+    opacity: 0; pointer-events: none; will-change: transform, opacity; 
+}
+#about-section { z-index: 20; } #project-section { z-index: 30; } #contact-section { z-index: 40; }
+
+/* Custom Scroll */
+.custom-scroll::-webkit-scrollbar { width: 4px; }
+.custom-scroll::-webkit-scrollbar-track { background: #001100; }
+.custom-scroll::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 2px; }
+
+/* Header */
+header { transition: transform 0.3s ease, opacity 0.3s ease; backdrop-filter: blur(5px); background: rgba(0, 0, 0, 0.9); }
+header.hidden-nav { transform: translateY(-100%); opacity: 0; }
+.nav-active { color: #fff; text-shadow: 0 0 10px rgba(34, 197, 94, 0.8); border-bottom: 2px solid #22c55e; }
+
+.data-stream { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; opacity: 0.05; pointer-events: none; }
+.data-stream span { position: absolute; top: -100%; font-size: 10px; color: #22c55e; animation: stream-fall linear infinite; }
+@keyframes stream-fall { to { top: 110%; } }
+
+.glow-text { text-shadow: 0 0 10px rgba(34, 197, 94, 0.4); }
+.card-hover { transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
+.card-hover:hover { transform: translateY(-4px); box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+
+/* --- 3D TAG CLOUD STYLES --- */
+.tagcloud { display: inline-block; font-family: 'VT323', monospace; font-weight: bold; color: #22c55e; }
+.tagcloud--item { transition: all 0.3s; cursor: pointer; will-change: transform, opacity; pointer-events: auto; }
+.tagcloud--item:hover { z-index: 100 !important; transform: scale(1.2); }
+.skill-item-container { display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+.skill-icon-3d { font-size: 48px; margin-bottom: 5px; filter: drop-shadow(0 0 5px rgba(0,0,0,0.8)); }
+.skill-text-3d { font-size: 16px; color: #22c55e; text-transform: uppercase; background: rgba(0,0,0,0.8); padding: 2px 6px; border-radius: 4px; border: 1px solid #22c55e; }
+.tagcloud--item:hover .skill-text-3d { background: #22c55e; color: #000; box-shadow: 0 0 10px #4ade80; }
+/* --- END TAG CLOUD --- */
+
+.status-indicator { animation: status-pulse 2s infinite; }
+@keyframes status-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); transform: scale(1); } 50% { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); transform: scale(1.1); } }
+
+.cyber-button { position: relative; overflow: hidden; transition: all 0.2s ease; text-decoration: none; display: inline-flex; justify-content: center; align-items: center; cursor: pointer; }
+.cyber-button:active { transform: scale(0.98); }
+
+.loading-bar { height: 2px; background: #22c55e; position: relative; overflow: hidden; }
+.loading-bar::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent); animation: loading-sweep 2s infinite; }
+@keyframes loading-sweep { to { left: 100%; } }
+
+.vignette { background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.8) 100%); }
+.skill-tag { transition: all 0.3s ease; cursor: default; }
+.skill-tag:hover { background: rgba(34, 197, 94, 0.5); color: #000; }
+.project-image { transition: transform 0.5s ease; width: 100%; height: 100%; object-fit: cover; }
+.project-card:hover .project-image { transform: scale(1.05); }
+
+/* Modal & Lightbox */
+.modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.95); backdrop-filter: blur(5px); }
+.modal.active { display: flex; justify-content: center; align-items: center; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal-content { background: rgba(0, 20, 0, 0.98); border: 2px solid #22c55e; box-shadow: 0 0 30px rgba(34, 197, 94, 0.3); max-width: 90%; max-height: 90%; overflow-y: auto; position: relative; animation: slideUp 0.3s ease; }
+@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.close-modal { position: absolute; top: 10px; right: 20px; font-size: 40px; font-weight: bold; color: #22c55e; cursor: pointer; z-index: 101; transition: all 0.3s; }
+.close-modal:hover { color: #fff; text-shadow: 0 0 10px #22c55e; }
+
+.screenshot-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+.screenshot-item { border: 1px solid #22c55e; overflow: hidden; cursor: pointer; transition: all 0.3s; }
+.screenshot-item:hover { box-shadow: 0 0 15px rgba(34, 197, 94, 0.5); transform: scale(1.02); border-color: #fff; }
+.screenshot-item img { width: 100%; height: 200px; object-fit: cover; display: block; }
+.screenshot-caption { background: rgba(0, 0, 0, 0.9); padding: 8px; text-align: center; font-size: 14px; color: #22c55e; border-top: 1px solid #22c55e; }
+
+.lightbox { display: none; position: fixed; z-index: 200; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.98); justify-content: center; align-items: center; }
+.lightbox.active { display: flex; }
+.lightbox img { max-width: 95%; max-height: 95%; border: 2px solid #22c55e; box-shadow: 0 0 30px rgba(34, 197, 94, 0.3); }
+.lightbox-close { position: absolute; top: 20px; right: 40px; font-size: 50px; color: #22c55e; cursor: pointer; }
+
+/* Toast Notification */
+#toast {
+    visibility: hidden; min-width: 250px; margin-left: -125px; background-color: #22c55e; color: black;
+    text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 200; left: 50%; bottom: 30px;
+    font-size: 17px; font-weight: bold; border: 2px solid #000; box-shadow: 0 0 10px #22c55e;
+}
+#toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+@keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+@keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
