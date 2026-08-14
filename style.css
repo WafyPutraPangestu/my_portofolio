@@ -156,11 +156,11 @@ main {
     overflow: visible !important;
 }
 
-/* Spacer agar kita bisa scroll 100vh pertama untuk nge-zoom PC */
+/* Spacer agar kita bisa scroll 150vh pertama untuk nge-zoom PC dan memunculkan konten */
 main::before {
     content: "";
     display: block;
-    height: 120vh;
+    height: 150vh;
     width: 100%;
 }
 

@@ -417,9 +417,11 @@ function animate() {
   requestAnimationFrame(animate);
   
   let scrollY = window.scrollY;
-  // Kalkulasi progress zoom berdasarkan scroll 120vh pertama
-  let maxScroll = window.innerHeight * 1.2;
-  let zoomProgress = Math.min(scrollY / maxScroll, 1);
+  let vh = window.innerHeight;
+  let maxScroll = vh * 1.5;
+  
+  // Kalkulasi progress zoom berdasarkan scroll
+  let zoomProgress = Math.min(scrollY / (vh * 1.0), 1);
   
   // Skala PC dari 1 ke 40
   let currentScale = 1 + (zoomProgress * 40);
@@ -443,6 +445,17 @@ function animate() {
     header.classList.add("hidden-nav");
   } else {
     header.classList.remove("hidden-nav");
+  }
+
+  // Efek About Section masuk dari dalam monitor (scale & opacity)
+  let entranceStart = vh * 0.5;
+  if (scrollY < maxScroll) {
+    let progress = Math.max(0, (scrollY - entranceStart) / (maxScroll - entranceStart));
+    aboutSection.style.transform = `scale(${0.9 + (progress * 0.1)})`;
+    aboutSection.style.opacity = progress;
+  } else {
+    aboutSection.style.transform = `scale(1)`;
+    aboutSection.style.opacity = 1;
   }
 }
 requestAnimationFrame(animate);
