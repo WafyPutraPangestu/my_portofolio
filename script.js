@@ -374,298 +374,95 @@ function createDataStream() {
 createGrid();
 createDataStream();
 
-let lastFrameTime = 0;
-const targetFPS = 60;
-const frameInterval = 1000 / targetFPS;
+// Setup Intersection Observer untuk Navbar, Animasi Mengetik, dan TagCloud
+const sectionsMap = [
+  { target: 'home', el: document.querySelector('main') },
+  { target: 'about', el: document.getElementById('about-section') },
+  { target: 'project', el: document.getElementById('project-section') },
+  { target: 'kontak', el: document.getElementById('contact-section') }
+];
 
-function updateNavbar() {
-  navLinks.forEach((link) => link.classList.remove("nav-active"));
-  if (scale < config.aboutEnter)
-    document.querySelector('a[href="#home"]').classList.add("nav-active");
-  else if (scale >= config.aboutEnter && scale <= config.aboutExit + 2)
-    document.querySelector('a[href="#about"]').classList.add("nav-active");
-  else if (scale >= config.projectEnter - 2 && scale <= config.projectExit + 2)
-    document.querySelector('a[href="#project"]').classList.add("nav-active");
-  else if (scale >= config.contactEnter - 2)
-    document.querySelector('a[href="#kontak"]').classList.add("nav-active");
-}
+const observerOptions = { root: null, rootMargin: '0px', threshold: 0.2 };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      let targetName = 'home';
+      if (id === 'about-section') targetName = 'about';
+      else if (id === 'project-section') targetName = 'project';
+      else if (id === 'contact-section') targetName = 'kontak';
+      
+      navLinks.forEach(link => {
+        link.classList.remove("nav-active");
+        if (link.dataset.target === targetName) link.classList.add("nav-active");
+      });
 
-function animate(currentTime) {
+      if (id === 'about-section') {
+        if (!hasStartedTyping) {
+          hasStartedTyping = true;
+          typeWriter();
+        }
+        initTagCloud();
+      }
+    }
+  });
+}, observerOptions);
+
+sectionsMap.forEach(sec => {
+  if (sec.el) observer.observe(sec.el);
+});
+
+// Render loop hanya untuk efek zoom PC di hero section berdasarkan scroll native
+function animate() {
   requestAnimationFrame(animate);
-  const deltaTime = currentTime - lastFrameTime;
-  if (deltaTime < frameInterval) return;
-  lastFrameTime = currentTime - (deltaTime % frameInterval);
-
-  if (Math.abs(targetScale - scale) > 0.01)
-    scale += (targetScale - scale) * easing;
-  else {
-    scale = targetScale;
-    easing = 0.1;
-  }
-
-  updateNavbar();
-  const scrollProgress = (scale - 1) / (config.max - 1);
-  gridContainer.style.transform = `perspective(500px) rotateX(${
-    scrollProgress * 5
-  }deg) scale(${1 + scrollProgress * 0.5})`;
-
-  if (scale < config.pcExit + 2) {
-    pcGroup.style.transform = `scale(${scale}) translate3d(0,0,0)`;
+  
+  let scrollY = window.scrollY;
+  // Kalkulasi progress zoom berdasarkan scroll 120vh pertama
+  let maxScroll = window.innerHeight * 1.2;
+  let zoomProgress = Math.min(scrollY / maxScroll, 1);
+  
+  // Skala PC dari 1 ke 40
+  let currentScale = 1 + (zoomProgress * 40);
+  
+  if (currentScale < 15) {
+    pcGroup.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
     let pcOp = 1;
-    if (scale > 5) pcOp = 1 - (scale - 5) / (config.pcExit - 5);
+    if (currentScale > 5) pcOp = 1 - (currentScale - 5) / 10;
     pcGroup.style.opacity = Math.max(0, pcOp);
     pcGroup.style.visibility = pcOp > 0 ? "visible" : "hidden";
-    scrollHint.style.opacity = scale > 1.5 ? 0 : 1;
+    scrollHint.style.opacity = currentScale > 1.5 ? 0 : 1;
   } else {
     pcGroup.style.visibility = "hidden";
   }
 
-  let aboutY = 0,
-    aboutOp = 0,
-    aboutScale = 1,
-    aboutPointer = "none";
-  if (scale > config.aboutEnter && scale <= config.aboutExit + 3) {
-    if (scale > config.aboutEnter + 1) {
-      if (!hasStartedTyping) {
-        hasStartedTyping = true;
-        typeWriter();
-      }
-      initTagCloud();
-    }
-    const entryDuration = 4;
-    if (scale < config.aboutEnter + entryDuration) {
-      const progress = (scale - config.aboutEnter) / entryDuration;
-      aboutY = (1 - progress) * 100;
-      aboutOp = progress;
-      aboutScale = 0.9 + progress * 0.1;
-    } else if (
-      scale >= config.aboutEnter + entryDuration &&
-      scale <= config.aboutExit
-    ) {
-      aboutY = 0;
-      aboutOp = 1;
-      aboutScale = 1;
-      aboutPointer = "auto";
-    } else if (scale > config.aboutExit) {
-      const exitProgress = (scale - config.aboutExit) / 3;
-      aboutY = exitProgress * -100;
-      aboutOp = 1 - exitProgress * 1.5;
-      aboutScale = 1 - exitProgress * 0.2;
-    }
-    aboutSection.style.transform = `translate3d(0, ${aboutY}vh, 0) scale(${aboutScale})`;
-    aboutSection.style.opacity = Math.max(0, aboutOp);
-    aboutSection.style.pointerEvents = aboutPointer;
-  } else {
-    aboutSection.style.opacity = 0;
-    aboutSection.style.pointerEvents = "none";
-    aboutSection.style.transform = "translate3d(0, 100vh, 0)";
-  }
+  // Animasi grid background saat di-scroll
+  gridContainer.style.transform = `perspective(500px) rotateX(${zoomProgress * 15}deg) scale(${1 + zoomProgress * 0.5})`;
 
-  let projY = 100,
-    projOp = 0,
-    projPointer = "none";
-  if (scale > config.projectEnter && scale <= config.projectExit + 3) {
-    const entryDuration = 3;
-    if (scale < config.projectEnter + entryDuration) {
-      const progress = (scale - config.projectEnter) / entryDuration;
-      projY = (1 - progress) * 100;
-      projOp = progress;
-    } else if (
-      scale >= config.projectEnter + entryDuration &&
-      scale <= config.projectExit
-    ) {
-      projY = 0;
-      projOp = 1;
-      projPointer = "auto";
-    } else if (scale > config.projectExit) {
-      const exitProgress = (scale - config.projectExit) / 3;
-      projY = exitProgress * -100;
-      projOp = 1 - exitProgress;
-    }
-    projectSection.style.transform = `translate3d(0, ${projY}vh, 0)`;
-    projectSection.style.opacity = Math.max(0, projOp);
-    projectSection.style.pointerEvents = projPointer;
+  // Sembunyikan navbar saat animasi PC zoom sedang berlangsung di tengah-tengah
+  if (currentScale > 2 && currentScale < 10) {
+    header.classList.add("hidden-nav");
   } else {
-    projectSection.style.transform = `translate3d(0, 100vh, 0)`;
-    projectSection.style.opacity = 0;
-    projectSection.style.pointerEvents = "none";
+    header.classList.remove("hidden-nav");
   }
-
-  let contactY = 100,
-    contactOp = 0,
-    contactPointer = "none";
-  if (scale > config.contactEnter) {
-    const entryDuration = 3;
-    const progress = (scale - config.contactEnter) / entryDuration;
-    if (progress < 1) {
-      contactY = (1 - progress) * 100;
-      contactOp = progress;
-    } else {
-      contactY = 0;
-      contactOp = 1;
-      contactPointer = "auto";
-    }
-    contactSection.style.transform = `translate3d(0, ${contactY}vh, 0)`;
-    contactSection.style.opacity = contactOp;
-    contactSection.style.pointerEvents = contactPointer;
-  } else {
-    contactSection.style.transform = `translate3d(0, 100vh, 0)`;
-    contactSection.style.opacity = 0;
-    contactSection.style.pointerEvents = "none";
-  }
-
-  if (scale > 2 && scale < 8) header.classList.add("hidden-nav");
-  else header.classList.remove("hidden-nav");
 }
 requestAnimationFrame(animate);
 
-let isScrolling;
-let scrollVelocity = 0;
-const maxVelocity = 1.2;
-window.addEventListener(
-  "wheel",
-  (e) => {
-    if (
-      modal.classList.contains("active") ||
-      lightbox.classList.contains("active")
-    )
-      return;
-    let activeSection = null;
-    if (scale >= 12 && scale <= config.aboutExit) activeSection = aboutSection;
-    else if (scale >= config.projectEnter + 3 && scale <= config.projectExit)
-      activeSection = projectSection;
-    else if (scale >= config.contactEnter + 3) activeSection = contactSection;
-
-    let allowPageScroll = true;
-    if (activeSection) {
-      const scrollables = activeSection.querySelectorAll(".custom-scroll");
-      scrollables.forEach((scrollContainer) => {
-        const rect = scrollContainer.getBoundingClientRect();
-        const isOver =
-          e.clientX >= rect.left &&
-          e.clientX <= rect.right &&
-          e.clientY >= rect.top &&
-          e.clientY <= rect.bottom;
-        if (
-          isOver &&
-          scrollContainer.scrollHeight > scrollContainer.clientHeight
-        ) {
-          const atTop = scrollContainer.scrollTop <= 0;
-          const atBottom =
-            Math.abs(
-              scrollContainer.scrollHeight -
-                scrollContainer.clientHeight -
-                scrollContainer.scrollTop
-            ) < 2;
-          if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom))
-            allowPageScroll = false;
-        }
-      });
-    }
-    if (allowPageScroll) {
-      e.preventDefault();
-      easing = 0.07;
-      scrollVelocity += e.deltaY > 0 ? scrollSpeedConst : -scrollSpeedConst;
-      scrollVelocity = Math.max(-0.35, Math.min(0.35, scrollVelocity));
-    }
-    window.clearTimeout(isScrolling);
-    isScrolling = setTimeout(() => {}, 150);
-  },
-  { passive: false }
-);
-
-function updateScrollLogic() {
-  if (Math.abs(scrollVelocity) > 0.001) {
-    targetScale += scrollVelocity;
-    targetScale = Math.min(Math.max(1, targetScale), config.max);
-    scrollVelocity *= velocityDamping;
-  } else {
-    scrollVelocity = 0;
-  }
-  requestAnimationFrame(updateScrollLogic);
-}
-updateScrollLogic();
-
+// Smooth scroll native untuk klik Navbar
 navLinks.forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
-    const target = link.dataset.target;
-    easing = 0.04;
-    if (target === "home") targetScale = 1;
-    else if (target === "about") targetScale = 14;
-    else if (target === "project") targetScale = 26;
-    else if (target === "kontak") targetScale = 40;
+    const targetId = link.dataset.target;
+    if (targetId === "home") {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      let sectionId = targetId === "kontak" ? "contact-section" : targetId + "-section";
+      const targetElement = document.getElementById(sectionId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
   });
 });
-
-let touchStartY = 0;
-let touchStartX = 0;
-window.addEventListener(
-  "touchstart",
-  (e) => {
-    touchStartY = e.touches[0].clientY;
-    touchStartX = e.touches[0].clientX;
-  },
-  { passive: true }
-);
-window.addEventListener(
-  "touchmove",
-  (e) => {
-    if (
-      modal.classList.contains("active") ||
-      lightbox.classList.contains("active")
-    )
-      return;
-      
-    const touchY = e.touches[0].clientY;
-    const touchX = e.touches[0].clientX;
-    const deltaY = touchStartY - touchY;
-    
-    let activeSection = null;
-    if (scale >= 12 && scale <= config.aboutExit) activeSection = aboutSection;
-    else if (scale >= config.projectEnter + 3 && scale <= config.projectExit)
-      activeSection = projectSection;
-    else if (scale >= config.contactEnter + 3) activeSection = contactSection;
-
-    let allowPageScroll = true;
-    if (activeSection) {
-      const scrollables = activeSection.querySelectorAll(".custom-scroll");
-      scrollables.forEach((scrollContainer) => {
-        const rect = scrollContainer.getBoundingClientRect();
-        const isOver =
-          touchX >= rect.left &&
-          touchX <= rect.right &&
-          touchY >= rect.top &&
-          touchY <= rect.bottom;
-        if (
-          isOver &&
-          scrollContainer.scrollHeight > scrollContainer.clientHeight
-        ) {
-          const atTop = scrollContainer.scrollTop <= 0;
-          const atBottom =
-            Math.abs(
-              scrollContainer.scrollHeight -
-                scrollContainer.clientHeight -
-                scrollContainer.scrollTop
-            ) < 2;
-          if ((deltaY < 0 && !atTop) || (deltaY > 0 && !atBottom))
-            allowPageScroll = false;
-        }
-      });
-    }
-
-    if (allowPageScroll && e.cancelable) {
-      e.preventDefault(); // Cegah native scroll agar tidak bentrok dengan custom zoom scroll
-      easing = 0.15;
-      scrollVelocity += deltaY * 0.003;
-      scrollVelocity = Math.max(-0.4, Math.min(0.4, scrollVelocity));
-    }
-
-    touchStartY = touchY;
-    touchStartX = touchX;
-  },
-  { passive: false } // Supaya bisa e.preventDefault()
-);
 
 const modalBody = document.getElementById("modal-body");
 const closeModal = document.querySelector(".close-modal");

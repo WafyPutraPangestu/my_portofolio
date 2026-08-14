@@ -141,3 +141,79 @@ header.hidden-nav { transform: translateY(-100%); opacity: 0; }
 #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
 @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
 @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+/* =========================================
+   CONTINUOUS NATIVE SCROLL LAYOUT
+   ========================================= */
+body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+}
+
+main {
+    display: block !important;
+    overflow: visible !important;
+}
+
+/* Spacer agar kita bisa scroll 100vh pertama untuk nge-zoom PC */
+main::before {
+    content: "";
+    display: block;
+    height: 120vh;
+    width: 100%;
+}
+
+/* PC Group tetap fixed di layar untuk di-zoom pakai JS berdasarkan scroll */
+#pc-group {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 100vw !important;
+    z-index: 10 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+#pc-group img {
+    margin: 0 auto;
+}
+
+/* Section konten tidak lagi fixed, sekarang berjejer vertikal bersambung */
+#about-section, #project-section, #contact-section { 
+    position: relative !important;
+    height: auto !important;
+    min-height: auto !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+    z-index: 20 !important;
+    padding-top: 80px !important;
+    padding-bottom: 80px !important;
+    background: transparent !important;
+}
+
+#about-section {
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 15%, rgba(0,0,0,1) 100%) !important;
+}
+
+#project-section, #contact-section {
+    background: #000 !important;
+}
+
+/* Matikan scrollbar custom di dalam tiap section karena sekarang pakai scrollbar utama browser */
+#about-section > div, #project-section > div, #contact-section > div {
+    height: auto !important;
+    overflow-y: visible !important;
+}
+
+/* Perbaikan khusus mobile untuk canvas yang berat */
+@media (max-width: 768px) {
+    #starfield { display: none !important; }
+    #tagcloud-container { transform: scale(0.7) !important; margin-top: 0 !important; }
+    main::before { height: 70vh; }
+    #pc-group img { max-height: 40vh; }
+}
