@@ -296,30 +296,32 @@ function initStars() {
 function updateStars() {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, width, height);
-  for (let i = 0; i < numStars; i++) {
-    let star = stars[i];
-    star.z -= speed;
+  if (window.innerWidth > 768) {
+    for (let i = 0; i < numStars; i++) {
+      let star = stars[i];
+      star.z -= speed;
 
-    // Reset jika bintang lewat (<=0) ATAU jika window di-resize jadi kecil (star.z > width)
-    if (star.z <= 0 || star.z > width) {
-      star.x = Math.random() * width - width / 2;
-      star.y = Math.random() * height - height / 2;
-      star.z = width;
-    }
+      // Reset jika bintang lewat (<=0) ATAU jika window di-resize jadi kecil (star.z > width)
+      if (star.z <= 0 || star.z > width) {
+        star.x = Math.random() * width - width / 2;
+        star.y = Math.random() * height - height / 2;
+        star.z = width;
+      }
 
-    const x = (star.x / star.z) * width + width / 2;
-    const y = (star.y / star.z) * height + height / 2;
+      const x = (star.x / star.z) * width + width / 2;
+      const y = (star.y / star.z) * height + height / 2;
 
-    // Mencegah radius negatif: gunakan Math.max(0, ...)
-    const rawSize = (1 - star.z / width) * 3;
-    const size = Math.max(0, rawSize);
+      // Mencegah radius negatif: gunakan Math.max(0, ...)
+      const rawSize = (1 - star.z / width) * 3;
+      const size = Math.max(0, rawSize);
 
-    if (x >= 0 && x <= width && y >= 0 && y <= height && size > 0) {
-      const brightness = 1 - star.z / width;
-      ctx.fillStyle = `rgba(34, 197, 94, ${brightness})`;
-      ctx.beginPath();
-      ctx.arc(x, y, size, 0, Math.PI * 2);
-      ctx.fill();
+      if (x >= 0 && x <= width && y >= 0 && y <= height && size > 0) {
+        const brightness = 1 - star.z / width;
+        ctx.fillStyle = `rgba(34, 197, 94, ${brightness})`;
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
   }
   requestAnimationFrame(updateStars);
@@ -597,10 +599,12 @@ navLinks.forEach((link) => {
 });
 
 let touchStartY = 0;
+let touchStartX = 0;
 window.addEventListener(
   "touchstart",
   (e) => {
     touchStartY = e.touches[0].clientY;
+    touchStartX = e.touches[0].clientX;
   },
   { passive: true }
 );
@@ -612,13 +616,55 @@ window.addEventListener(
       lightbox.classList.contains("active")
     )
       return;
+      
     const touchY = e.touches[0].clientY;
+    const touchX = e.touches[0].clientX;
     const deltaY = touchStartY - touchY;
-    easing = 0.15;
-    scrollVelocity = (deltaY > 0 ? scrollSpeedConst : -scrollSpeedConst) * 0.8;
+    
+    let activeSection = null;
+    if (scale >= 12 && scale <= config.aboutExit) activeSection = aboutSection;
+    else if (scale >= config.projectEnter + 3 && scale <= config.projectExit)
+      activeSection = projectSection;
+    else if (scale >= config.contactEnter + 3) activeSection = contactSection;
+
+    let allowPageScroll = true;
+    if (activeSection) {
+      const scrollables = activeSection.querySelectorAll(".custom-scroll");
+      scrollables.forEach((scrollContainer) => {
+        const rect = scrollContainer.getBoundingClientRect();
+        const isOver =
+          touchX >= rect.left &&
+          touchX <= rect.right &&
+          touchY >= rect.top &&
+          touchY <= rect.bottom;
+        if (
+          isOver &&
+          scrollContainer.scrollHeight > scrollContainer.clientHeight
+        ) {
+          const atTop = scrollContainer.scrollTop <= 0;
+          const atBottom =
+            Math.abs(
+              scrollContainer.scrollHeight -
+                scrollContainer.clientHeight -
+                scrollContainer.scrollTop
+            ) < 2;
+          if ((deltaY < 0 && !atTop) || (deltaY > 0 && !atBottom))
+            allowPageScroll = false;
+        }
+      });
+    }
+
+    if (allowPageScroll) {
+      e.preventDefault(); // Cegah native scroll agar tidak bentrok dengan custom zoom scroll
+      easing = 0.15;
+      scrollVelocity += deltaY * 0.003;
+      scrollVelocity = Math.max(-0.4, Math.min(0.4, scrollVelocity));
+    }
+
     touchStartY = touchY;
+    touchStartX = touchX;
   },
-  { passive: true }
+  { passive: false } // Supaya bisa e.preventDefault()
 );
 
 const modalBody = document.getElementById("modal-body");
