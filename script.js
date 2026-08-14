@@ -412,22 +412,27 @@ sectionsMap.forEach(sec => {
   if (sec.el) observer.observe(sec.el);
 });
 
+let smoothedScrollY = 0;
+
 // Render loop hanya untuk efek zoom PC di hero section berdasarkan scroll native
 function animate() {
   requestAnimationFrame(animate);
   
-  let scrollY = window.scrollY;
+  // Tambahkan easing ke nilai scroll agar zoom terasa lebih mulus dan tidak kaku (persis seperti versi lama)
+  smoothedScrollY += (window.scrollY - smoothedScrollY) * 0.1;
+  
   let vh = window.innerHeight;
   let maxScroll = vh * 1.5;
   
   // Kalkulasi progress zoom berdasarkan scroll
-  let zoomProgress = Math.min(scrollY / (vh * 1.0), 1);
+  let zoomProgress = Math.min(smoothedScrollY / (vh * 1.0), 1);
   
   // Skala PC dari 1 ke 40
   let currentScale = 1 + (zoomProgress * 40);
   
   if (currentScale < 15) {
-    pcGroup.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
+    // Transform harus persis seperti lama agar tidak lari ke pojok
+    pcGroup.style.transform = `scale(${currentScale}) translate3d(0,0,0)`;
     let pcOp = 1;
     if (currentScale > 5) pcOp = 1 - (currentScale - 5) / 10;
     pcGroup.style.opacity = Math.max(0, pcOp);
@@ -449,8 +454,8 @@ function animate() {
 
   // Efek About Section masuk dari dalam monitor (scale & opacity)
   let entranceStart = vh * 0.5;
-  if (scrollY < maxScroll) {
-    let progress = Math.max(0, (scrollY - entranceStart) / (maxScroll - entranceStart));
+  if (smoothedScrollY < maxScroll) {
+    let progress = Math.max(0, (smoothedScrollY - entranceStart) / (maxScroll - entranceStart));
     aboutSection.style.transform = `scale(${0.9 + (progress * 0.1)})`;
     aboutSection.style.opacity = progress;
   } else {
