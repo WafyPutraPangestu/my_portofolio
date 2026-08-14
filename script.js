@@ -654,7 +654,7 @@ window.addEventListener(
       });
     }
 
-    if (allowPageScroll) {
+    if (allowPageScroll && e.cancelable) {
       e.preventDefault(); // Cegah native scroll agar tidak bentrok dengan custom zoom scroll
       easing = 0.15;
       scrollVelocity += deltaY * 0.003;
