@@ -1,0 +1,387 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head><style>.gm-err-container{height:100%;width:100%;display:table;background-color:#e8eaed;position:relative;left:0;top:0}.gm-err-content{border-radius:1px;padding-top:0;padding-left:10%;padding-right:10%;position:static;vertical-align:middle;display:table-cell}.gm-err-content a{color:#3c4043}.gm-err-icon{text-align:center}.gm-err-title{margin:5px;margin-bottom:20px;color:#3c4043;font-family:Roboto,Arial,sans-serif;text-align:center;font-size:24px}.gm-err-message{margin:5px;color:#3c4043;font-family:Roboto,Arial,sans-serif;text-align:center;font-size:12px}.gm-err-autocomplete{padding-left:20px;background-repeat:no-repeat;-webkit-background-size:15px 15px;background-size:15px 15px}sentinel{}
+</style><style>.gm-style-moc{background-color:rgba(0,0,0,.59);pointer-events:none;text-align:center;-webkit-transition:opacity ease-in-out;transition:opacity ease-in-out}.gm-style-mot{color:white;font-family:Roboto,Arial,sans-serif;font-size:22px;margin:0;position:relative;top:50%;transform:translateY(-50%);-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%)}sentinel{}
+</style><style>.gm-style img{max-width: none;}.gm-style {font: 400 11px Roboto, Arial, sans-serif; text-decoration: none;}</style>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Spidey Tracker Contact Map</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts for Pixel Art & Base Design System -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space+Grotesk:wght@400;500;700&amp;family=Press+Start+2P&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected from Design System -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#3a0b00",
+                    "on-tertiary-fixed": "#001e30",
+                    "secondary-fixed": "#ffdbd0",
+                    "on-primary": "#690006",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#8ecdff",
+                    "inverse-surface": "#fddbd7",
+                    "outline-variant": "#5d3f3c",
+                    "on-primary-fixed-variant": "#93000d",
+                    "surface-container-high": "#392523",
+                    "muted-blue": "#8A93B2",
+                    "surface-container": "#2d1b19",
+                    "on-secondary": "#5d1800",
+                    "web-silver": "#C7CCDC",
+                    "on-error": "#690005",
+                    "tertiary-fixed": "#cbe6ff",
+                    "surface-dim": "#200f0d",
+                    "surface-bright": "#493431",
+                    "primary-fixed": "#ffdad6",
+                    "outline": "#ae8883",
+                    "background": "#200f0d",
+                    "surface-container-low": "#291715",
+                    "primary-fixed-dim": "#ffb4ab",
+                    "secondary": "#ffb59e",
+                    "error": "#ffb4ab",
+                    "on-tertiary-container": "#fbfcff",
+                    "on-secondary-container": "#ffece7",
+                    "on-primary-container": "#fffafa",
+                    "secondary-container": "#c63c01",
+                    "surface-variant": "#45302d",
+                    "tertiary-container": "#007bb5",
+                    "error-container": "#93000a",
+                    "surface-tint": "#ffb4ab",
+                    "on-tertiary-fixed-variant": "#004b71",
+                    "on-secondary-fixed-variant": "#842500",
+                    "primary-container": "#e31e24",
+                    "tertiary": "#8ecdff",
+                    "on-primary-fixed": "#410002",
+                    "primary": "#ffb4ab",
+                    "midnight-navy": "#0A0E27",
+                    "surface": "#200f0d",
+                    "surface-container-lowest": "#1a0a08",
+                    "on-surface-variant": "#e7bdb8",
+                    "on-background": "#fddbd7",
+                    "secondary-fixed-dim": "#ffb59e",
+                    "inverse-on-surface": "#402b29",
+                    "inverse-primary": "#c00014",
+                    "on-surface": "#fddbd7",
+                    "surface-container-highest": "#45302d",
+                    "on-tertiary": "#00344f",
+                    
+                    // Pixel Art Theme Colors (Merging with Base System)
+                    "tracker-navy": "#0B2C3D",
+                    "cyan-frame": "#3FC1D6",
+                    "deep-teal": "#134A5B",
+                    "spidey-red": "#E31E24",
+                    "web-green": "#3FA34D",
+                    "pixel-white": "#EAF6FA"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem",
+                    "none": "0px" // Explicitly enforcing 0px for pixel theme
+            },
+            "spacing": {
+                    "section-padding-desktop": "80px",
+                    "grid-gap": "24px",
+                    "header-strip-height": "100px",
+                    "section-padding-mobile": "40px"
+            },
+            "fontFamily": {
+                    "headline-xl-mobile": ["Anton"],
+                    "label-sm": ["Space Grotesk"],
+                    "body-md": ["Space Grotesk"],
+                    "headline-xl": ["Anton"],
+                    "body-lg": ["Space Grotesk"],
+                    "headline-lg": ["Anton"],
+                    "pixel": ["'Press Start 2P'", "cursive"]
+            },
+            "fontSize": {
+                    "headline-xl-mobile": ["40px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                    "label-sm": ["14px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-xl": ["64px", {"lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.5", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "pixel-sm": ["10px", {"lineHeight": "1.5"}],
+                    "pixel-md": ["14px", {"lineHeight": "1.5"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Custom Pixel Borders */
+        .pixel-border-double {
+            border: 4px solid #3FC1D6;
+            box-shadow: 
+                0 0 0 4px #134A5B,
+                0 0 0 8px #3FC1D6;
+            border-radius: 0px !important;
+        }
+
+        /* Tick Marks via repeating gradient */
+        .tick-marks-top {
+            background-image: repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(63, 193, 214, 0.5) 18px, rgba(63, 193, 214, 0.5) 20px);
+            background-size: 100% 10px;
+            background-repeat: no-repeat;
+            background-position: top;
+        }
+        
+        .tick-marks-left {
+            background-image: repeating-linear-gradient(180deg, transparent, transparent 18px, rgba(63, 193, 214, 0.5) 18px, rgba(63, 193, 214, 0.5) 20px);
+            background-size: 10px 100%;
+            background-repeat: no-repeat;
+            background-position: left;
+        }
+
+        /* Marquee Animation */
+        @keyframes scrollMarquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scrollMarquee 15s linear infinite;
+        }
+
+        /* Scanline effect over the map */
+        .scanlines {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            z-index: 10;
+        }
+        
+        /* Spidey Glow override for buttons */
+        .btn-pixel-glow {
+            box-shadow: 4px 4px 0px 0px rgba(11,44,61,1), 0 0 15px rgba(241, 86, 36, 0.4);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        .btn-pixel-glow:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px rgba(11,44,61,1), 0 0 5px rgba(241, 86, 36, 0.4);
+        }
+    </style>
+<script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/65/12f/common.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/65/12f/util.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/65/12f/map.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/65/12f/marker.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/65/12f/log.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/65/12f/onion.js"></script></head>
+<body class="bg-background text-on-background min-h-screen font-body-md">
+<!-- Top Navigation Placeholder (Adhering to Semantic Shell) -->
+
+<!-- Main Content Area -->
+<main class="pb-section-padding-mobile md:pb-section-padding-desktop px-4 md:px-grid-gap max-w-[1440px] mx-auto mt-8">
+<!-- Section Header -->
+<div class="mb-12 border-l-4 border-secondary-container pl-6 py-2 bg-surface-container/50">
+
+
+</div>
+<!-- Spidey Tracker HUD (Bento Grid Style Container) -->
+<section class="relative w-full max-w-5xl mx-auto bg-deep-teal p-3 md:p-6 pb-0 mt-8 mb-16">
+<!-- Floating Badge -->
+<div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-tracker-navy to-cyan-frame text-pixel-white font-pixel text-pixel-md py-2 px-4 border-2 border-cyan-frame flex items-center gap-2 z-20 shadow-[0_4px_0_#0B2C3D]">
+<span class="">SPIDEY</span>
+<span class="material-symbols-outlined text-spidey-red" style="font-variation-settings: 'FILL' 1;">download_for_offline</span>
+<span class="">TRACKER</span>
+</div>
+<!-- Decorative Top Right Icon -->
+<div class="hidden md:flex absolute top-4 right-4 bg-pixel-white w-8 h-8 border-2 border-cyan-frame items-center justify-center z-20 cursor-pointer hover:bg-muted-blue transition-colors">
+<span class="material-symbols-outlined text-tracker-navy text-sm">my_location</span>
+</div>
+<div class="relative w-full border-4 border-cyan-frame bg-tracker-navy h-[400px] md:h-[500px] overflow-hidden flex shadow-[0_0_0_4px_#134A5B,0_0_0_8px_#3FC1D6] rounded-none">
+<!-- Left Sidebar Legends (Hidden on Mobile) -->
+<div class="hidden md:flex w-[60px] bg-tracker-navy border-r-2 border-cyan-frame/30 flex-col items-center py-6 gap-6 z-20">
+<div class="w-8 h-8 border-2 border-web-green bg-tracker-navy flex items-center justify-center cursor-pointer hover:bg-web-green/20">
+<span class="material-symbols-outlined text-web-green text-sm" style="font-variation-settings: 'FILL' 1;">bug_report</span>
+</div>
+<div class="w-8 h-8 border-2 border-spidey-red bg-tracker-navy flex items-center justify-center cursor-pointer hover:bg-spidey-red/20">
+<span class="material-symbols-outlined text-spidey-red text-sm" style="font-variation-settings: 'FILL' 1;">bug_report</span>
+</div>
+<div class="w-8 h-8 border-2 border-pixel-white/50 bg-tracker-navy flex items-center justify-center mt-auto cursor-pointer">
+<span class="material-symbols-outlined text-pixel-white/50 text-sm">layers</span>
+</div>
+</div>
+<!-- Map Container -->
+<div class="relative flex-1 h-full bg-tracker-navy">
+<!-- Tick Marks Overlays -->
+<div class="absolute top-0 left-0 right-0 h-4 tick-marks-top z-10 pointer-events-none"></div>
+<div class="absolute top-0 left-0 bottom-0 w-4 tick-marks-left z-10 pointer-events-none"></div>
+<!-- Google Map Div -->
+<div class="w-full h-full bg-tracker-navy" data-location="New York City" id="spidey-map" style="position: relative; overflow: hidden;"><div class="w-full h-full flex flex-col items-center justify-center text-center p-6 bg-tracker-navy" style="background-image: radial-gradient(rgb(19, 74, 91) 1px, transparent 1px); background-size: 20px 20px;"><div class="bg-tracker-navy/90 border-2 border-cyan-frame p-6 max-w-md shadow-[0_0_20px_rgba(63,193,214,0.3)]"><span class="material-symbols-outlined text-spidey-red text-4xl mb-4">map_error</span><h3 class="font-pixel text-pixel-md text-cyan-frame mb-4">MAP_OFFLINE</h3><p class="font-body-md text-pixel-white/80 mb-4">Google Maps API Key Required for live tracking.</p><div class="text-left bg-black/40 p-3 border border-cyan-frame/30 rounded-none"><p class="text-[10px] font-pixel text-web-green leading-relaxed">// TO ENABLE:<br>1. GET API KEY FROM GCP<br>2. REPLACE 'YOUR_API_KEY_HERE' IN THE SCRIPT TAG AT THE BOTTOM OF THIS FILE.</p></div></div></div></div>
+<!-- Scanlines overlay -->
+<div class="scanlines"></div>
+<!-- Radar Compass (Bottom Right) -->
+<div class="hidden md:block absolute bottom-6 right-6 w-24 h-24 z-20 pointer-events-none opacity-80">
+<!-- Simulated Radar SVG -->
+<svg class="w-full h-full animate-spin" style="animation-duration: 8s;" viewBox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="#3FC1D6" stroke-dasharray="4 4" stroke-width="2"></circle>
+<circle cx="50" cy="50" fill="none" r="30" stroke="#3FC1D6" stroke-width="1"></circle>
+<circle cx="50" cy="50" fill="none" r="15" stroke="#3FC1D6" stroke-width="1"></circle>
+<line stroke="#3FC1D6" stroke-width="1" x1="50" x2="50" y1="5" y2="95"></line>
+<line stroke="#3FC1D6" stroke-width="1" x1="5" x2="95" y1="50" y2="50"></line>
+<circle class="animate-ping" cx="70" cy="30" fill="#E31E24" r="3"></circle>
+<circle cx="70" cy="30" fill="#E31E24" r="3"></circle>
+</svg>
+</div>
+<!-- Pixel Sprite & CTA (Bottom Left) -->
+<div class="absolute bottom-6 left-4 md:left-24 z-20 flex flex-col items-center gap-2">
+<!-- Placeholder for pixel art sprite -->
+<div class="w-12 h-12 bg-spidey-red/20 border-2 border-spidey-red flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover rendering-pixelated" data-alt="An 8-bit retro pixel art sprite of a red and blue superhero crouching in a heroic pose, flat lighting, nostalgic video game aesthetic, highly detailed pixels." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0-22PRjWIbBwposu_MQyIUaguqOGQ44tNPYG9FF6NrTlFOAbkw6IUoGukZBBT4TpvjKEfxESoRCcRWIpCmNgnucFWzGluHEYLUhSPogRPaNjW8wecOA_kb4Ud1Grv79QQ7k3tJq_0HrRe6Erf-twluLySV6oFIVPeMiij7vFMtaUXN8CaV6KP0qRFcWCAqpNlspYoOjyGaQ2Uj1aPY_Ce-1_A9UesuNKBgYZRWtgQcnjGNN8zFpNX">
+</div>
+<a class="bg-secondary-container text-pixel-white font-pixel text-[10px] py-2 px-4 border-2 border-pixel-white uppercase tracking-wider btn-pixel-glow text-center" href="https://maps.google.com" target="_blank">
+                            GET DIRECTIONS
+                        </a>
+</div>
+</div>
+</div>
+<!-- Marquee Strip -->
+<div class="w-full bg-[#051821] border-4 border-t-0 border-cyan-frame h-10 flex items-center overflow-hidden relative shadow-[0_4px_0_#134A5B,0_8px_0_#3FC1D6] rounded-none mb-4">
+<div class="flex-1 overflow-hidden relative">
+<p class="font-pixel text-cyan-frame text-pixel-sm animate-marquee leading-10">
+                        SHARE YOUR SPIDEY SIGHTING • GET DIRECTIONS TO MY OFFICE • INCOMING TRANSMISSION • SENSORS ACTIVE • 
+                    </p>
+</div>
+<!-- Speaker Toggle -->
+<button class="bg-tracker-navy border-l-2 border-cyan-frame h-full px-4 flex items-center justify-center hover:bg-cyan-frame/20 transition-colors z-10 relative">
+<span class="material-symbols-outlined text-cyan-frame text-sm">volume_up</span>
+</button>
+</div>
+<!-- Spacer to account for shadow offset -->
+<div class="h-4"></div>
+</section>
+</main>
+<!-- Footer -->
+
+<!-- Google Maps JS API Initialization -->
+<!-- Note: Replace YOUR_API_KEY_HERE with actual key in production -->
+<script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&amp;callback=initMap"></script>
+<script>
+        function initMap() {
+            // Default location: New York City (Queens area roughly)
+            const myLatLng = { lat: 40.7282, lng: -73.7948 };
+
+            // Spidey Pixel Style Array
+            const spideyStyle = [
+                {
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#0B2C3D" }]
+                },
+                {
+                    "elementType": "labels.text.fill",
+                    "stylers": [{ "color": "#EAF6FA" }]
+                },
+                {
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{ "color": "#051821" }, { "weight": 2 }]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{ "color": "#134A5B" }]
+                },
+                {
+                    "featureType": "landscape",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#0B2C3D" }]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#134A5B" }]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "labels.text",
+                    "stylers": [{ "visibility": "off" }]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "labels.icon",
+                    "stylers": [{ "visibility": "off" }]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#1D6475" }]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#288599" }]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#3FC1D6" }]
+                },
+                {
+                    "featureType": "transit",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#134A5B" }]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#051821" }]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{ "color": "#3FC1D6" }]
+                }
+            ];
+
+            // Setup map
+            const mapElement = document.getElementById('spidey-map');
+            if (mapElement && typeof google !== 'undefined') {
+                const map = new google.maps.Map(mapElement, {
+                    zoom: 12,
+                    center: myLatLng,
+                    styles: spideyStyle,
+                    disableDefaultUI: true, // Hide default controls for HUD feel
+                    zoomControl: true,
+                    zoomControlOptions: {
+                        position: google.maps.ControlPosition.RIGHT_CENTER
+                    }
+                });
+
+                // Custom Marker
+                // In a real scenario, 'icon' would point to a real SVG/PNG path
+                // Using a generic red circle fallback here if path is invalid, but configured for the prompt
+                new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    title: "Spidey HQ",
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 10,
+                        fillColor: "#E31E24",
+                        fillOpacity: 1,
+                        strokeColor: "#3FC1D6",
+                        strokeWeight: 2
+                    }
+                });
+            }
+        }
+        
+        // Ensure initMap is called if API loads before script executes
+        if (typeof google === 'object' && typeof google.maps === 'object') {
+            initMap();
+        }
+    </script>
+
+
+<div style="position: absolute; left: 0px; top: -2px; height: 1px; overflow: hidden; visibility: hidden; width: 1px;"><span style="position: absolute; font-size: 300px; width: auto; height: auto; margin: 0px; padding: 0px; font-family: Roboto, Arial, sans-serif;" class="">BESbswy</span></div></body></html>

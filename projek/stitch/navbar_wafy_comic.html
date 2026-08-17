@@ -1,0 +1,193 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Wafy Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-tint": "#ffb4ab",
+                        "inverse-primary": "#c00014",
+                        "on-tertiary": "#00344f",
+                        "surface-dim": "#200f0d",
+                        "surface-variant": "#45302d",
+                        "on-secondary-fixed-variant": "#842500",
+                        "tertiary-container": "#007bb5",
+                        "on-secondary-fixed": "#3a0b00",
+                        "secondary-fixed-dim": "#ffb59e",
+                        "tertiary-fixed-dim": "#8ecdff",
+                        "on-primary": "#690006",
+                        "surface-container-low": "#291715",
+                        "surface-container-high": "#392523",
+                        "primary": "#ffb4ab",
+                        "on-secondary": "#5d1800",
+                        "primary-fixed-dim": "#ffb4ab",
+                        "outline": "#ae8883",
+                        "web-silver": "#C7CCDC",
+                        "on-primary-fixed": "#410002",
+                        "inverse-surface": "#fddbd7",
+                        "on-error": "#690005",
+                        "muted-blue": "#8A93B2",
+                        "on-tertiary-container": "#fbfcff",
+                        "outline-variant": "#5d3f3c",
+                        "midnight-navy": "#0A0E27",
+                        "secondary-fixed": "#ffdbd0",
+                        "on-surface-variant": "#e7bdb8",
+                        "background": "#200f0d",
+                        "surface-container-lowest": "#1a0a08",
+                        "inverse-on-surface": "#402b29",
+                        "surface-container-highest": "#45302d",
+                        "primary-container": "#e31e24",
+                        "secondary-container": "#c63c01",
+                        "surface-bright": "#493431",
+                        "surface-container": "#2d1b19",
+                        "surface": "#200f0d",
+                        "on-tertiary-fixed": "#001e30",
+                        "on-primary-container": "#fffafa",
+                        "primary-fixed": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "on-secondary-container": "#ffece7",
+                        "tertiary": "#8ecdff",
+                        "secondary": "#ffb59e",
+                        "on-tertiary-fixed-variant": "#004b71",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#fddbd7",
+                        "on-background": "#fddbd7",
+                        "on-primary-fixed-variant": "#93000d",
+                        "tertiary-fixed": "#cbe6ff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "section-padding-mobile": "40px",
+                        "grid-gap": "24px",
+                        "header-strip-height": "100px",
+                        "section-padding-desktop": "80px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Anton", "sans-serif"],
+                        "body-md": ["Space Grotesk", "sans-serif"],
+                        "headline-xl-mobile": ["Anton", "sans-serif"],
+                        "headline-xl": ["Anton", "sans-serif"],
+                        "label-sm": ["Space Grotesk", "sans-serif"],
+                        "body-lg": ["Space Grotesk", "sans-serif"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-xl-mobile": ["40px", { "lineHeight": "1.1", "fontWeight": "400" }],
+                        "headline-xl": ["64px", { "lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "label-sm": ["14px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.5", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .comic-bg {
+            background-color: #1E40C4;
+            background-image: radial-gradient(#0B1440 15%, transparent 16%);
+            background-size: 8px 8px;
+        }
+        .comic-border {
+            border: 4px solid #0B1440;
+        }
+        .comic-shadow {
+            box-shadow: 4px 4px 0px 0px #0A0E27;
+        }
+        .web-line {
+            position: absolute;
+            height: 1px;
+            background-color: white;
+            top: 50%;
+            left: 0;
+            width: 0;
+            transition: width 0.3s ease-out;
+            transform-origin: left;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .nav-link:hover .web-line {
+            width: 100%;
+        }
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 35, 27, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(229, 35, 27, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 35, 27, 0); }
+        }
+        .live-dot {
+            animation: pulse-dot 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md overflow-x-hidden selection:bg-primary-container selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
+<div class="h-[100px] flex justify-between items-center px-grid-gap w-full max-w-full bg-[#1E40C4] border-b-[4px] border-[#0B1440] shadow-[0_4px_15px_rgba(10,14,39,0.4)]">
+<!-- Address Bar / Tab Logo -->
+
+<!-- Navigation Links (Desktop) -->
+<div class="hidden md:flex items-center space-x-8">
+<!-- Using active state style for HOME as per logic -->
+<a class="nav-link relative group text-white border-b-2 border-white pb-1 font-body-lg tracking-[0.2em] uppercase" href="#">
+                    HOME
+                    <div class="web-line"></div>
+</a>
+<a class="nav-link relative group text-white/80 hover:text-white font-body-lg tracking-[0.2em] uppercase transition-colors" href="#">
+                    TENTANG
+                    <div class="web-line"></div>
+</a>
+<a class="nav-link relative group text-white/80 hover:text-white font-body-lg tracking-[0.2em] uppercase transition-colors" href="#">
+                    KEAHLIAN
+                    <div class="web-line"></div>
+</a>
+<a class="nav-link relative group text-white/80 hover:text-white font-body-lg tracking-[0.2em] uppercase transition-colors" href="#">
+                    PORTOFOLIO
+                    <div class="web-line"></div>
+</a>
+</div>
+<!-- CTA & Socials -->
+<div class="flex items-center space-x-6">
+<!-- Social Icons -->
+<div class="hidden lg:flex items-center space-x-4 text-white/80">
+<a class="hover:text-white hover:scale-110 transition-all" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">public</span></a>
+<a class="hover:text-white hover:scale-110 transition-all" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">code</span></a>
+</div>
+<!-- CTA Button -->
+<a class="bg-[#E5231B] text-white px-8 py-4 font-headline-lg text-lg uppercase italic tracking-widest border-2 border-[#0B1440] comic-shadow hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#0A0E27] active:translate-y-[4px] active:shadow-none transition-all flex items-center gap-2" href="#">
+                    KONTAK
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Canvas (Placeholder content to allow scrolling) -->
+
+<!-- Footer -->
+
+<script>
+        // Simple script to handle navbar background darkening on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar').firstElementChild;
+            if (window.scrollY > 50) {
+                nav.style.backgroundColor = '#0f2063'; // Darker blue
+            } else {
+                nav.style.backgroundColor = '#1E40C4'; // Original blue
+            }
+        });
+    </script>
+
+
+</body></html>
