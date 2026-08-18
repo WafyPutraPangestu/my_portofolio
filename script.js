@@ -252,3 +252,32 @@ window.addEventListener('scroll', () => {
         }
     }
 });
+
+// ============================================================
+// Mobile Hamburger Menu Toggle
+// ============================================================
+function closeMobileMenu() {
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (hamburgerBtn && mobileMenu) {
+        hamburgerBtn.classList.remove('is-active');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.remove('is-open');
+        document.body.style.overflow = '';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (hamburgerBtn && mobileMenu) {
+        hamburgerBtn.addEventListener('click', () => {
+            const isActive = hamburgerBtn.classList.toggle('is-active');
+            hamburgerBtn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+            mobileMenu.classList.toggle('is-open');
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = isActive ? 'hidden' : '';
+        });
+    }
+});

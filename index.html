@@ -90,10 +90,35 @@
                     </div>
                     
                     <!-- CTA Button -->
-                    <a class="bg-[#E5231B] text-white px-4 py-1 md:px-5 md:py-1.5 font-['Anton'] text-base md:text-lg uppercase italic tracking-widest border-2 border-[#0B1440] comic-shadow hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#0A0E27] active:translate-y-[4px] active:shadow-none transition-all flex items-center gap-2" href="#contact">
+                    <a class="bg-[#E5231B] text-white px-4 py-1 md:px-5 md:py-1.5 font-['Anton'] text-base md:text-lg uppercase italic tracking-widest border-2 border-[#0B1440] comic-shadow hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#0A0E27] active:translate-y-[4px] active:shadow-none transition-all flex items-center gap-2 hidden md:flex" href="#contact">
                         KONTAK
                         <span class="material-symbols-outlined">arrow_forward</span>
                     </a>
+
+                    <!-- Hamburger Button (Mobile Only) -->
+                    <button class="hamburger-btn md:hidden" id="hamburger-btn" aria-label="Toggle Menu" aria-expanded="false">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Overlay -->
+            <div class="mobile-menu" id="mobile-menu">
+                <div class="mobile-menu__inner">
+                    <a class="mobile-menu__link" href="#home" onclick="closeMobileMenu()">HOME</a>
+                    <a class="mobile-menu__link" href="#section-two" onclick="closeMobileMenu()">TENTANG</a>
+                    <a class="mobile-menu__link" href="#skills" onclick="closeMobileMenu()">KEAHLIAN</a>
+                    <a class="mobile-menu__link" href="#portfolio" onclick="closeMobileMenu()">PORTOFOLIO</a>
+                    <a class="mobile-menu__link" href="#contact" onclick="closeMobileMenu()">KONTAK</a>
+                    <div class="mobile-menu__socials">
+                        <a href="https://github.com/WafyPutraPangestu" target="_blank" rel="noopener" aria-label="GitHub"><i class="devicon-github-original"></i></a>
+                        <a href="https://www.linkedin.com/in/wafy-putra-pangestu-152923253/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="devicon-linkedin-plain"></i></a>
+                        <a href="https://www.facebook.com/wfywfyfy/" target="_blank" rel="noopener" aria-label="Facebook"><i class="devicon-facebook-plain"></i></a>
+                        <a href="https://www.instagram.com/wafyputrapangestu/" target="_blank" rel="noopener" aria-label="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
+                        <a href="https://wa.me/62855156419655" target="_blank" rel="noopener" aria-label="WhatsApp"><span class="material-symbols-outlined">call</span></a>
+                    </div>
                 </div>
             </div>
         </nav>
