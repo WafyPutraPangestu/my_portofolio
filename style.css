@@ -26,6 +26,11 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: clip;
+    max-width: 100vw;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -1125,11 +1130,6 @@ body {
     .s5-container {
         padding: 0 2rem;
     }
-
-    /* Spidey Puller smaller on tablet */
-    .spidey-puller img {
-        width: 140px;
-    }
 }
 
 /* ---------- Small phones (max-width: 400px) ---------- */
@@ -1219,21 +1219,36 @@ body {
 /* Kontainer Spidey yang fixed di layar */
 .spidey-puller {
     position: fixed;
-    top: -1500px; /* Sembunyi sangat jauh di atas viewport secara default */
-    right: 15%; /* Jarak dari kanan, bisa disesuaikan */
-    z-index: 100; /* Paling depan, di atas semua konten termasuk section-two */
-    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efek memantul saat turun */
-    pointer-events: none; /* Agar tidak menghalangi klik ke elemen di bawahnya */
+    top: -100vh; /* Sembunyi di atas layar sejauh 1 tinggi layar */
+    right: 5%;
+    height: 100vh; /* Tinggi pas 1 layar */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pastikan Spidey selalu di bagian Bawah layar saat muncul */
+    z-index: 50;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+}
+
+/* Garis jaring buatan agar tidak putus saat gambar mengecil di mobile */
+.spidey-puller::before {
+    content: '';
+    width: 2px;
+    flex-grow: 1;
+    background: linear-gradient(to bottom, transparent, #e9dfc9);
+    margin: 0 auto;
+    opacity: 0.8;
 }
 
 .spidey-puller img {
-    width: 200px; /* Sesuaikan ukuran Spidey */
+    width: clamp(120px, 15vw, 200px); /* Ukuran adaptif dari HP ke Desktop */
+    flex-shrink: 0;
     filter: drop-shadow(0 15px 15px rgba(0,0,0,0.6));
 }
 
 /* Class ini ditambahkan oleh JS saat mulai scroll */
 .spidey-puller.is-visible {
-    transform: translateY(1480px); /* Meluncur turun (1480 - 1500 = -20px dari atas layar) */
+    transform: translateY(100vh); /* Meluncur turun sejauh 1 layar, Spidey pas menyentuh bawah layar */
 }
 
 /* Jaring Lab-Laba Murni CSS (Gaya Komik) */
