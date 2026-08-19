@@ -26,6 +26,11 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -3040,25 +3045,31 @@ h1.s2-title {
 .mobile-menu {
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     width: 100%;
     height: 100vh;
     height: 100dvh;
     background: rgba(10, 14, 40, 0.97);
     z-index: 55;
-    display: flex;
+    display: none; /* Pakai display: none agar tidak makan tempat saat hidden */
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-20px);
-    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
 }
 
 .mobile-menu.is-open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+    display: flex;
+    animation: menuFadeIn 0.3s ease forwards;
+}
+
+@keyframes menuFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .mobile-menu__inner {
