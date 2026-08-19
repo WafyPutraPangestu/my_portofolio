@@ -2220,6 +2220,7 @@ h1.s2-title {
     padding: 12rem 0 6rem 0; /* Jarak atas diperbesar agar header tidak tertutup marquee */
     border-top: 4px solid var(--spidey-red);
     z-index: 4;
+    overflow-x: hidden;
 }
 
 .s4-header {
@@ -3072,6 +3073,21 @@ h1.s2-title {
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+}
+
+.mobile-menu__close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    z-index: 75;
+}
+
+.mobile-menu__close:hover {
+    transform: scale(1.1);
 }
 
 .mobile-menu__link {

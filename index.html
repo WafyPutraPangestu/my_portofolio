@@ -106,7 +106,12 @@
         </nav>
 
         <!-- Mobile Menu Overlay (Pindah ke luar nav agar tidak merusak lebar layar / bikin bisa di-scroll ke samping) -->
-        <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu" id="mobile-menu" aria-hidden="true" style="z-index: 70;">
+            <!-- Tombol Close (X) Khusus di Dalam Menu -->
+            <button class="mobile-menu__close" id="mobile-menu-close" onclick="closeMobileMenu()" aria-label="Close Menu">
+                <span class="material-symbols-outlined" style="font-size: 2rem; color: #fff;">close</span>
+            </button>
+
             <div class="mobile-menu__inner">
                 <a class="mobile-menu__link" href="#home" onclick="closeMobileMenu()">HOME</a>
                 <a class="mobile-menu__link" href="#section-two" onclick="closeMobileMenu()">TENTANG</a>
